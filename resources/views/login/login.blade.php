@@ -192,10 +192,14 @@
 
                 <!-- Sign In Button -->
                 <button type="submit" class="button">Sign In</button>
+
+                <!-- Forgot Password Link -->
+                <div class="form-options">
+                    <a href="{{ route('password.request') }}" class="forgot-password">Forgot Password?</a>
+                </div>
             </form>
         </div>
     </div>
-
 
     <!-- Bootstrap and Custom JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

@@ -1,18 +1,19 @@
 <?php
 
+use App\Exports\PelamarExport;
+use App\Mail\resetPasswordMail;
+use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PelamarController;
 use App\Http\Controllers\PosisiController;
+use App\Http\Controllers\PelamarController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\Auth\PasswordController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\SettingsController;
 use App\Http\Controllers\manajement\AccountController;
-use App\Exports\PelamarExport;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\RedirectResponse;
-use App\Mail\resetPasswordMail;
 
 // Route yang dapat diakses tanpa login (publik)
 // Route untuk halaman Posisi (hanya bisa diakses setelah login)
@@ -47,7 +48,17 @@ Route::put('/profile/edit', [ProfileController::class, 'update'])->name('profile
 
 Route::get('/settings', [SettingsController::class, 'edit'])->name('settings');
 Route::put('/settings', [SettingsController::class, 'update'])->name('settings.update');
+// Route untuk halaman lupa password
+Route::get('password/reset', [PasswordController::class, 'showLinkRequestForm'])->name('password.request');
 
+// Route untuk mengirimkan email reset password
+Route::post('password/email', [PasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+
+// Route untuk halaman reset password setelah klik link
+Route::get('password/reset/{token}', [PasswordController::class, 'showResetForm'])->name('password.reset');
+
+// Route untuk mengupdate password setelah reset
+Route::post('password/reset', [PasswordController::class, 'reset'])->name('password.update');
 // Halaman Dashboard (Hanya bisa diakses setelah login)
 Route::get('/', function () {
     return view('rekrut.dasbord', [
@@ -91,6 +102,6 @@ Route::prefix('manajement')->middleware('auth')->group(function () {
 });
 
 
-Route::get('resetMail' , function () {
-    Mail::to('AAA@gmail.com')->send(new resetPasswordMail());
-});
+// Route::get('resetMail' , function () {
+//     Mail::to('AAA@gmail.com')->send(new resetPasswordMail());
+// });

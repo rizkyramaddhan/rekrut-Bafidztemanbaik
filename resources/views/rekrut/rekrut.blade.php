@@ -253,14 +253,14 @@
                     <p class="lead mb-4">Lamaran Anda telah berhasil dikirim dan akan kami proses.</p>
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle me-2"></i>
-                        <strong>Mohon Untuk Screenshot Bukti Pengiriman Lamaran ini, lalu dikirimkan ke WhatsApp Kami</strong>
+                        <strong>Mohon Untuk Screenshot Bukti Pengiriman Lamaran ini, bukti Screenshot ini akan digunakan kembali jika lolos ke tahap interview</strong>
                     </div>
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle me-2"></i>
-                        <strong>Informasi selanjutnya akan kami sampaikan melalui WhatsApp</strong>
+                        <strong>Informasi selanjutnya akan kami sampaikan melalui WhatsApp, jika lamaran sudah lolos ke tahap selanjutnya </strong>
                     </div>
                     <p class="text-muted">
-                        <i class="fas fa-clock me-2"></i>
+                        <i class=" me-2"></i>
                         Tim HR kami akan menghubungi Anda dalam 1-3 hari kerja
                     </p>
                 </div>
