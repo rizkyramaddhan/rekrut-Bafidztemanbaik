@@ -259,10 +259,7 @@
                         <i class="fas fa-info-circle me-2"></i>
                         <strong>Pengumuman lolos ke tahap selanjutnya akan diinformasikan melalui WhatsApp.</strong>
                     </div>
-                    {{-- <p class="text-muted">
-                        <i class=" me-2"></i>
-                        Kami akan menghubungi Anda dalam 1-3 hari kerja
-                    </p> --}}
+
                 </div>
                 <div class="mt-4">
                     <a href="{{ route('rekrutmen.form') }}" class="btn btn-outline-primary">
@@ -388,15 +385,15 @@
 
                 <div class="mb-3">
                     <label for="cv" class="form-label">
-                        <i class="fas fa-file-pdf"></i>Upload CV (PDF/DOC)
+                        <i class="fas fa-file-pdf"></i>Upload CV (PDF)
                     </label>
                     <input type="file" 
                            class="form-control @error('cv') is-invalid @enderror" 
                            id="cv" 
                            name="cv" 
-                           accept=".pdf,.doc,.docx" 
+                           accept=".pdf" 
                            required>
-                    <div class="form-text">Format yang diterima: PDF, DOC, DOCX (Maks. 5MB)</div>
+                    <div class="form-text">Format yang diterima: PDF (Maks. 5MB)</div>
                     @error('cv')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @else

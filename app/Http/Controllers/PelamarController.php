@@ -88,7 +88,7 @@ public function index()
             'posisi' => 'required|exists:posisis,id', // Validasi ID posisi
 
             // Validasi untuk file CV
-            'cv' => 'required|file|mimes:pdf,doc,docx|max:5120',  // Maksimum 5MB
+            'cv' => 'required|file|mimes:pdf|max:5120',  // Maksimum 5MB
 
             // Validasi untuk file KTP
             'ktp' => 'required|image|mimes:jpg,jpeg,png|max:1024', // Maksimum 1MB

@@ -283,71 +283,52 @@
 </form>
 
 
-    <!-- Sidebar -->
-    <nav class="sidebar" id="sidebar">
-        <div class="p-3">
-            <h6 class="text-white-50 text-uppercase mb-3">Menu Utama</h6>
-            
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
-                        <i class="fas fa-tachometer-alt"></i>
-                        home
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('posisi') ? 'active' : '' }}" href="{{ route('posisi') }}">
-                        <i class="fas fa-briefcase"></i>
-                        Lowongan Kerja
-                    </a>
-                </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('applications.*') ? 'active' : '' }}" href="">
-                        <i class="fas fa-file-alt"></i>
-                        Lamaran
-                    </a>
-                </li> --}}
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('candidates.*') ? 'active' : '' }}" href="{{ route('admin.dasbord') }}">
-                        <i class="fas fa-users"></i>
-                        Kandidat
-                    </a>
-                </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('interviews.*') ? 'active' : '' }}" href="">
-                        <i class="fas fa-calendar-check"></i>
-                        Jadwal Interview
-                    </a>
-                </li> --}}
-            </ul>
+<!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+    <div class="p-3">
+        <h6 class="text-white-50 text-uppercase mb-3">Menu Utama</h6>
 
-            <hr class="my-3" style="border-color: rgba(255,255,255,0.2);">
-            
-            <h6 class="text-white-50 text-uppercase mb-3">Manajemen</h6>
-            <ul class="nav flex-column">
-                {{-- <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('departments.*') ? 'active' : '' }}" href="">
-                        <i class="fas fa-building"></i>
-                        Departemen
-                    </a>
-                </li> --}}
-                <li class="nav-item">
-    <a class="nav-link {{ request()->routeIs('manajement.accounts') ? 'active' : '' }}" href="{{ route('manajement.accounts') }}">
-    <i class="fas fa-user-cog"></i>
-    Manajemen Pengguna
-</a>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Home
+                </a>
+            </li>
 
-</li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('posisi') ? 'active' : '' }}" href="{{ route('posisi') }}">
+                    <i class="fas fa-briefcase"></i>
+                    Lowongan Kerja
+                </a>
+            </li>
 
-                {{-- <li class="nav-item">
-                    <a class="nav-link {{ request()->routeIs('reports.*') ? 'active' : '' }}" href="">
-                        <i class="fas fa-chart-bar"></i>
-                        Laporan
-                    </a>
-                </li> --}}
-            </ul>
-        </div>
-    </nav>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.dasbord') ? 'active' : '' }}" href="{{ route('admin.dasbord') }}">
+                    <i class="fas fa-users"></i>
+                    Kandidat
+                </a>
+            </li>
+        </ul>
+
+        <hr class="my-3" style="border-color: rgba(255,255,255,0.2);">
+
+        @auth
+            @if(Auth::user()->role === 'admin')
+                <h6 class="text-white-50 text-uppercase mb-3">Manajemen</h6>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link {{ request()->routeIs('manajement.accounts') ? 'active' : '' }}" href="{{ route('manajement.accounts') }}">
+                            <i class="fas fa-user-cog"></i>
+                            Manajemen Akun
+                        </a>
+                    </li>
+                </ul>
+            @endif
+        @endauth
+    </div>
+</nav>
+
 
     <!-- Sidebar Overlay for Mobile -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
