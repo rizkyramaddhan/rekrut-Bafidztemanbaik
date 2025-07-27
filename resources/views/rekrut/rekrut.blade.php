@@ -247,22 +247,22 @@
                     <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
                 </div>
                 <h2 class="text-success mb-3">
-                    <i class="fas fa-thumbs-up me-2"></i>Terima Kasih Banyak!
+                    <i class="fas fa-thumbs-up me-2"></i>Terima Kasih!
                 </h2>
                 <div class="success-text">
-                    <p class="lead mb-4">Lamaran Anda telah berhasil dikirim dan akan kami proses.</p>
+                    <p class="lead mb-4">Lamaran Saudara/i telah berhasil dikirim dan akan kami proses.</p>
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle me-2"></i>
-                        <strong>Mohon Untuk Screenshot Bukti Pengiriman Lamaran ini, bukti Screenshot ini akan digunakan kembali jika lolos ke tahap interview</strong>
+                        <strong>Mohon screenshoot bukti lamaran ini. Bukti screenshoot akan digunakan kembali jika lolos ke tahap selanjutnya. </strong>
                     </div>
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle me-2"></i>
-                        <strong>Informasi selanjutnya akan kami sampaikan melalui WhatsApp, jika lamaran sudah lolos ke tahap selanjutnya </strong>
+                        <strong>Pengumuman lolos ke tahap selanjutnya akan diinformasikan melalui WhatsApp.</strong>
                     </div>
-                    <p class="text-muted">
+                    {{-- <p class="text-muted">
                         <i class=" me-2"></i>
-                        Tim HR kami akan menghubungi Anda dalam 1-3 hari kerja
-                    </p>
+                        Kami akan menghubungi Anda dalam 1-3 hari kerja
+                    </p> --}}
                 </div>
                 <div class="mt-4">
                     <a href="{{ route('rekrutmen.form') }}" class="btn btn-outline-primary">
