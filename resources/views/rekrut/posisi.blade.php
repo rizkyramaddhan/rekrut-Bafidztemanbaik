@@ -8,9 +8,9 @@
 @section('content')
 <!-- Statistics Cards -->
 <div class="row mb-4">
-    <x-card title="Total Lowongan Posisi" value="{{ $totalPosisi }}" icon="fas fa-users" />
-<x-card title="Total Status Aktif" value="{{ $totalStatusAktif }}" icon="fas fa-users" />
-<x-card title="Total Status Non-Aktif" value="{{ $totalStatusNonAktif }}" icon="fas fa-users" />
+    <x-card title="Total Lowongan Posisi" value="{{ $totalPosisi }}" icon="fas fa-users" href="{{ route('posisi') }}" />
+<x-card title="Total Status Aktif" value="{{ $totalStatusAktif }}" icon="fas fa-users" href="{{ route('posisi', ['status' => 'aktif']) }}" />
+<x-card title="Total Status Non-Aktif" value="{{ $totalStatusNonAktif }}" icon="fas fa-users" href="{{ route('posisi', ['status' => 'non-aktif']) }}" />
 </div>
 
 <!-- Action Buttons -->
@@ -23,15 +23,6 @@
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPositionModal">
                         <i class="fas fa-plus-circle me-2"></i>Tambah Posisi Baru
                     </button>
-                    {{-- <button class="btn btn-outline-success" onclick="activateAll()">
-                        <i class="fas fa-check me-2"></i>Aktifkan Semua
-                    </button>
-                    <button class="btn btn-outline-warning" onclick="deactivateAll()">
-                        <i class="fas fa-pause me-2"></i>Non-Aktifkan Semua
-                    </button>
-                    <a href="" class="btn btn-outline-info">
-                        <i class="fas fa-arrow-left me-2"></i>Kembali ke Dashboard
-                    </a> --}}
                 </div>
             </div>
         </div>
@@ -48,9 +39,10 @@
             <!-- Filter Status -->
             <select class="form-select form-select-sm" id="statusFilter" onchange="filterByStatus()">
                 <option value="">Semua Status</option>
-                <option value="aktif">Aktif</option>
-                <option value="non-aktif">Non-Aktif</option>
+                <option value="aktif" {{ request('status') == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                <option value="non-aktif" {{ request('status') == 'non-aktif' ? 'selected' : '' }}>Non-Aktif</option>
             </select>
+
             
             <!-- Search -->
             <div class="input-group input-group-sm" style="width: 250px;">
@@ -335,6 +327,9 @@
         document.getElementById('searchInput').addEventListener('keyup', function () {
             searchPosisi();
         });
+
+        // Memanggil filterByStatus untuk menyesuaikan tampilan tabel dengan status yang dipilih
+    filterByStatus();
     });
 
     // Filter positions based on the selected status

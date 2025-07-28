@@ -27,11 +27,11 @@
 </style>
 <!-- Statistics Cards -->
 <div class="row">
-        <x-card title="Total Pelamar" value="{{ $totalPelamar }}" icon="fas fa-users" />
-        <x-card title="Total Status Proses" value="{{ $statusProses }}" icon="fas fa-users" />
-<x-card title="Total Status Interview" value="{{ $statusInterview }}" icon="fas fa-users" />
-<x-card title="Total Status Training" value="{{ $totalStatusTraining }}" icon="fas fa-users" />
-<x-card title="Total Status Di Tolak" value="{{ $totalStatusTolak }}" icon="fas fa-users" />
+        <x-card title="Total Pelamar" value="{{ $totalPelamar }}" icon="fas fa-users" href="{{ route('admin.dasbord') }}" />
+        <x-card title="Total Status Proses" value="{{ $statusProses }}" icon="fas fa-users" href="{{ route('admin.dasbord', ['status' => 'proses']) }}" />
+<x-card title="Total Status Interview" value="{{ $statusInterview }}" icon="fas fa-users"  href="{{ route('admin.dasbord', ['status' => 'interview']) }}"/>
+<x-card title="Total Status Training" value="{{ $totalStatusTraining }}" icon="fas fa-users" href="{{ route('admin.dasbord', ['status' => 'training']) }}" />
+<x-card title="Total Status Di Tolak" value="{{ $totalStatusTolak }}" icon="fas fa-users" href="{{ route('admin.dasbord', ['status' => 'ditolak']) }}" />
  </div>
 <!-- Action Buttons -->
 <div class="row mb-4">
@@ -73,10 +73,10 @@
             <!-- Filter Status -->
             <select class="form-select form-select-sm" id="statusFilter" onchange="filterByStatus()">
                 <option value="">Semua Status</option>
-                <option value="proses">Proses</option>
-                <option value="interview">Interview</option>
-                <option value="training">Training</option>
-                <option value="ditolak">Ditolak</option>
+                <option value="proses" {{ request('status') == 'proses' ? 'selected' : '' }}>Proses</option>
+                <option value="interview" {{ request('status') == 'interview' ? 'selected' : '' }}>Interview</option>
+                <option value="training" {{ request('status') == 'training' ? 'selected' : '' }}>Training</option>
+                <option value="ditolak" {{ request('status') == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
             </select>
             
             <!-- Search -->
@@ -215,11 +215,21 @@
 @endif
         
         <!-- Edit Button -->
-        <a href="#"
+<a href="#"
    class="btn btn-sm btn-outline-secondary"
    title="Edit Data"
-   data-bs-toggle="modal" data-bs-target="#editModal"
-   onclick="openEditModal({{ $pelamar->id }}, '{{ $pelamar->nama }}', '{{ $pelamar->posisi }}', '{{ $pelamar->status }}')">
+   data-bs-toggle="modal" 
+   data-bs-target="#editModal"
+   onclick="openEditModal(
+       {{ $pelamar->id }}, 
+       '{{ addslashes($pelamar->nama) }}', 
+       '{{ $pelamar->posisi_id ?? $pelamar->posisi }}', 
+       '{{ $pelamar->status }}',
+       '{{ addslashes($pelamar->email) }}',
+       '{{ $pelamar->telepon }}',
+       '{{ $pelamar->cv }}',
+       '{{ $pelamar->ktp }}'
+   )">
     <i class="fas fa-edit"></i>
 </a>
     </div>
@@ -300,27 +310,71 @@
 
 <!-- Edit Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editModalLabel">Edit Data Pelamar</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editForm">
+                <form id="editForm" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     <input type="hidden" id="editPelamarId" name="pelamar_id">
-                    <div class="mb-3">
-                        <label for="editNama" class="form-label">Nama</label>
-                        <input type="text" class="form-control" id="editNama" name="nama" required>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editNama" class="form-label">Nama <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="editNama" name="nama" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editPosisi" class="form-label">
+                                    <i class="fas fa-briefcase me-1"></i>Posisi <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-select @error('posisi') is-invalid @enderror" 
+                                        id="editPosisi" 
+                                        name="posisi" 
+                                        required>
+                                    <option value="">-- Pilih Posisi --</option>
+                                    @if(isset($posisis) && $posisis->isNotEmpty())
+                                        @foreach($posisis as $posisiItem)
+                                            <option value="{{ $posisiItem->id }}">
+                                                {{ $posisiItem->nama_posisi }}
+                                            </option>
+                                        @endforeach
+                                    @else
+                                        <option disabled>Belum ada posisi yang terbuka saat ini</option>
+                                    @endif
+                                </select>
+                                @error('posisi')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @else
+                                    <div class="invalid-feedback">Pilih posisi yang Anda lamar.</div>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <label for="editPosisi" class="form-label">Posisi</label>
-                        <input type="text" class="form-control" id="editPosisi" name="posisi" required>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editEmail" class="form-label">Email <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="editEmail" name="email" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editTelepon" class="form-label">Telepon <span class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="editTelepon" name="telepon" required>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="mb-3">
-                        <label for="editStatus" class="form-label">Status</label>
+                        <label for="editStatus" class="form-label">Status <span class="text-danger">*</span></label>
                         <select class="form-select" id="editStatus" name="status" required>
                             <option value="proses">Proses</option>
                             <option value="interview">Interview</option>
@@ -328,7 +382,32 @@
                             <option value="ditolak">Ditolak</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editCv" class="form-label">CV (PDF)</label>
+                                <input type="file" class="form-control" id="editCv" name="cv" accept=".pdf">
+                                <div class="form-text">Kosongkan jika tidak ingin mengubah file CV</div>
+                                <div id="currentCv" class="mt-2"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="editKtp" class="form-label">KTP (PDF/JPG/PNG)</label>
+                                <input type="file" class="form-control" id="editKtp" name="ktp" accept=".pdf,.jpg,.jpeg,.png">
+                                <div class="form-text">Kosongkan jika tidak ingin mengubah file KTP</div>
+                                <div id="currentKtp" class="mt-2"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i>Simpan Perubahan
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -363,12 +442,20 @@
     let newStatus = null;
     
     // Initialize tooltips
-    document.addEventListener('DOMContentLoaded', function() {
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-    });
+    document.addEventListener('DOMContentLoaded', function () {
+    // Ambil nilai status dari query parameter jika ada
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+
+    // Atur dropdown berdasarkan parameter URL jika ada
+    if (status) {
+        document.getElementById('statusFilter').value = status;
+    }
+
+    // Panggil filterByStatus untuk memfilter data pelamar saat halaman dimuat
+    filterByStatus();
+});
+
     
 // Fungsi untuk mengubah status pelamar
     function ubahStatus(pelamarId, status) {
@@ -476,12 +563,34 @@
     }
 
     // Fungsi untuk membuka modal edit dan mengisi data
-function openEditModal(id, nama, posisi, status) {
+function openEditModal(id, nama, posisi, status, email, telepon, cv, ktp) {
     // Set input field values
     document.getElementById('editPelamarId').value = id;
     document.getElementById('editNama').value = nama;
     document.getElementById('editPosisi').value = posisi;
     document.getElementById('editStatus').value = status;
+    document.getElementById('editEmail').value = email;
+    document.getElementById('editTelepon').value = telepon;
+    
+    // Display current files
+    const currentCvElement = document.getElementById('currentCv');
+    const currentKtpElement = document.getElementById('currentKtp');
+    
+    if (cv && cv !== '') {
+        currentCvElement.innerHTML = `<small class="text-muted">File saat ini: <a href="/storage/${cv}" target="_blank" class="text-decoration-none"><i class="fas fa-file-pdf me-1"></i>Lihat CV</a></small>`;
+    } else {
+        currentCvElement.innerHTML = '<small class="text-muted">Belum ada file CV</small>';
+    }
+    
+    if (ktp && ktp !== '') {
+        currentKtpElement.innerHTML = `<small class="text-muted">File saat ini: <a href="/storage/${ktp}" target="_blank" class="text-decoration-none"><i class="fas fa-id-card me-1"></i>Lihat KTP</a></small>`;
+    } else {
+        currentKtpElement.innerHTML = '<small class="text-muted">Belum ada file KTP</small>';
+    }
+    
+    // Clear file inputs
+    document.getElementById('editCv').value = '';
+    document.getElementById('editKtp').value = '';
 }
 
 // Menangani pengiriman form edit

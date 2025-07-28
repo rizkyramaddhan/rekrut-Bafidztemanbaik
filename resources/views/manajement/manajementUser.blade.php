@@ -5,6 +5,44 @@
 @section('page_description', 'Kelola semua akun pengguna dalam sistem')
 @section('breadcrumb', 'Akun')
 
+@push('styles')
+    <style>
+
+        /* Password Toggle Styles */
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            color: #6c757d;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .password-toggle-btn:hover {
+            color: #495057;
+        }
+
+        .password-toggle input {
+            padding-right: 40px;
+        }
+        
+    </style>
+@endpush
+
+
 @section('content')
 <div class="container-fluid">
     <!-- Alert Messages -->
@@ -24,9 +62,9 @@
 
     <!-- Statistics Cards -->
     <div class="row mb-4">
-        <x-card title="Total Account" value="{{ $totalAccount }}" icon="fas fa-users" />
-        <x-card title="Total Status Aktif" value="{{ $statusAktif }}" icon="fas fa-users" />
-        <x-card title="Total Status Non-Aktif" value="{{ $statusNonAktif }}" icon="fas fa-users" />
+        <x-card title="Total Account" value="{{ $totalAccount }}" icon="fas fa-users" href="{{ route('manajement.accounts') }}" />
+        <x-card title="Total Status Aktif" value="{{ $statusAktif }}" icon="fas fa-users" href="{{ route('manajement.accounts', ['status' => 'aktif']) }}" />
+        <x-card title="Total Status Non-Aktif" value="{{ $statusNonAktif }}" icon="fas fa-users" href="{{ route('manajement.accounts', ['status' => 'nonaktif']) }}" />
     </div>
 
     <!-- Quick Actions -->
@@ -53,9 +91,9 @@
                         <div class="col-auto">
                             <select class="form-select form-select-sm" id="statusFilter">
                                 <option value="">Semua Status</option>
-                                <option value="aktif">Aktif</option>
-                                <option value="nonaktif">Non-Aktif</option>
-                                <option value="suspended">Suspended</option>
+                                <option value="aktif" {{ request('status') == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                                <option value="nonaktif" {{ request('status') == 'nonaktif' ? 'selected' : '' }}>Non-Aktif</option>
+                                <option value="suspended" {{ request('status') == 'suspended' ? 'selected' : '' }}>Suspended</option>
                             </select>
                         </div>
                         <div class="col-auto">
@@ -224,23 +262,33 @@
                         </div>
                     </div>
 
-                    <!-- Password -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Password <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" name="password" id="password" required>
+                    <!-- Password dengan Toggle -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Password <span class="text-danger">*</span></label>
+                                    <div class="password-toggle">
+                                        <input type="password" class="form-control" name="password" id="password" required>
+                                        <button type="button" class="password-toggle-btn" onclick="togglePassword('password')">
+                                            <i class="fas fa-eye" id="password-icon"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
 
-                        <!-- Confirm Password -->
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label class="form-label">Confirm Password <span class="text-danger">*</span></label>
-                                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" required>
+                            <!-- Confirm Password dengan Toggle -->
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                                    <div class="password-toggle">
+                                        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" required>
+                                        <button type="button" class="password-toggle-btn" onclick="togglePassword('password_confirmation')">
+                                            <i class="fas fa-eye" id="password_confirmation-icon"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -271,6 +319,7 @@
 
 @push('scripts')
 <script>
+    
     $(document).ready(function() {
     // CSRF Token setup for AJAX requests
     $.ajaxSetup({
@@ -303,6 +352,9 @@
     $('#statusFilter').on('change', function() {
         performFilter();
     });
+
+    // Run performFilter when the page is loaded
+    performFilter();
 
     // Form submission
     $('#accountForm').on('submit', function(e) {
@@ -788,5 +840,20 @@ function formatDate(dateString) {
         year: 'numeric'
     });
 }
+
+function togglePassword(fieldId) {
+            const passwordField = document.getElementById(fieldId);
+            const icon = document.getElementById(fieldId + '-icon');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
 </script>
 @endpush

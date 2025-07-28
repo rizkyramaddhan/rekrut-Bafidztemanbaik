@@ -26,7 +26,48 @@
         }
         
         $whatsappNumber = formatWhatsAppNumber($pelamar->telepon);
-        $defaultMessage = "Halo " . $pelamar->nama . ", terima kasih telah melamar di perusahaan kami. Kami ingin berdiskusi lebih lanjut mengenai lamaran Anda.";
+        
+// Menghitung tanggal interview (2 hari setelah hari ini)
+$tanggalInterview = date('l, d F Y', strtotime('+2 days'));
+
+// Konversi hari ke bahasa Indonesia
+$hariInggris = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+$hariIndonesia = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
+$bulanInggris = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+$bulanIndonesia = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+$tanggalInterview = str_replace($hariInggris, $hariIndonesia, $tanggalInterview);
+$tanggalInterview = str_replace($bulanInggris, $bulanIndonesia, $tanggalInterview);
+
+$defaultMessage = "Selamat Siang, Yayasan Tunas Dayaloka (Bimba Tahfidz temanbaik) mengundang " . $pelamar->nama . " untuk hadir Interview kerja pada:
+
+Hari/Tanggal: " . $tanggalInterview . "
+Waktu: Pukul 10.00 WIB - selesai
+Lokasi: Kantor Kemitraan Bimba Tahfidz Temanbaik
+Perum. Deparis Residence Blok B1 No. 19 (depan Randymart), Kecamatan Tajur Halang, Kabupaten Bogor.
+
+Catatan Penting:
+Sebelum menghadiri wawancara, Saudari wajib mengirimkan berkas lamaran untuk keperluan administrasi terlebih dahulu. Berkas yang diperlukan:
+1. CV (Curriculum Vitae)
+2. Surat Lamaran
+3. Fotokopi KTP dan KK
+4. Fotokopi Ijazah dan Transkrip Nilai
+5. Pas Foto
+
+Seluruh dokumen tersebut harap digabungkan dalam satu file PDF dan dikirimkan melalui WhatsApp ke nomor ini. Setelah berkas terkirim, mohon konfirmasi kehadiran Anda.
+
+Pada saat wawancara wajib membawa:
+1. Alat tulis
+2. Salinan berkas lamaran yang sudah dicetak
+
+Harap memastikan salinan berkas lengkap dan sesuai dengan dokumen yang telah dikirim sebelumnya.
+
+Dimohon untuk datang tepat waktu. Jika tidak, maka kesempatan akan diberikan kepada kandidat lain.
+
+https://g.co/kgs/Z36RhWC
+
+Demikian informasi ini kami sampaikan. Terima kasih atas perhatian dan kerja samanya.";
         $whatsappUrl = $whatsappNumber ? 'https://wa.me/' . $whatsappNumber . '?text=' . urlencode($defaultMessage) : '#';
     @endphp
 
@@ -53,25 +94,24 @@
                     <dd class="col-sm-9">{{ $pelamar->email }}</dd>
 
                     <dt class="col-sm-3">Telepon</dt>
-                    <dd class="col-sm-9">{{ $pelamar->telepon }}</dd>
+                    <dd class="col-sm-9">
+                                    <a href="{{ $whatsappUrl }}" 
+                        target="_blank" 
+                        class="whatsapp-link"
+                        title="Hubungi via WhatsApp">
+                            <i class="fab fa-whatsapp me-2"></i>
+                            WhatsApp
+                            <i class="fas fa-external-link-alt ms-2"></i>
+                        </a>
+                        
+                        <a href="tel:{{ $pelamar->telepon }}" class="phone-link me-3 " title="Telepon langsung">
+                            <i class="fas fa-phone text-primary me-2"></i>
+                            {{ $pelamar->telepon }}
+                        </a>
+                    </dd>
 
                     <dt class="col-sm-3">Posisi Dilamar</dt>
-                    <dd class="col-sm-9"><!-- WhatsApp Link -->
-            <a href="{{ $whatsappUrl }}" 
-               target="_blank" 
-               class="whatsapp-link"
-               title="Hubungi via WhatsApp">
-                <i class="fab fa-whatsapp me-2"></i>
-                WhatsApp
-                <i class="fas fa-external-link-alt ms-2"></i>
-            </a>
-            
-            <a href="tel:{{ $pelamar->telepon }}" class="phone-link me-3 " title="Telepon langsung">
-                <i class="fas fa-phone text-primary me-2"></i>
-                {{ $pelamar->telepon }}
-            </a>
-        
-        </dd>
+                    <dd class="col-sm-9">{{ $posisiList[$pelamar->posisi] ?? 'Posisi Tidak Diketahui' }}</dd>
 
                     <dt class="col-sm-3">Status</dt>
                     <dd class="col-sm-9">

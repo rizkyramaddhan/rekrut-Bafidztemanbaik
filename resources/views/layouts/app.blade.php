@@ -30,6 +30,7 @@
     <!-- Custom CSS -->
     <style>
         
+        
         :root {
             --sidebar-width: 280px;
             --navbar-height: 56px;
@@ -231,6 +232,8 @@
             background: rgba(255,255,255,0.5);
         }
     </style>
+
+     @stack('styles')
 </head>
 <body>
 
