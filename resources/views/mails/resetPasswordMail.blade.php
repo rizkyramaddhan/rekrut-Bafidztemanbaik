@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<<<<<<< HEAD
     <title>Reset Your Password</title>
     <style>
         /* Reset some styles */
@@ -110,3 +111,11 @@
     </div>
 </body>
 </html>
+=======
+    <title>Document</title>
+</head>
+<body>
+    <h1>Welocome</h1>
+</body>
+</html>
+>>>>>>> a4d1d5e8ba46a0a90d34e6a0ae3d62c6a686f004

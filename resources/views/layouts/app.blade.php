@@ -242,7 +242,11 @@
         </button>
         <a class="navbar-brand" href="{{ route('home') }}">
             <i class="fas fa-users-cog me-2"></i>
+<<<<<<< HEAD
             Sistem Rekrutmen Bimba Tahfidz Temanbaik
+=======
+            Sistem Rekrutmen
+>>>>>>> a4d1d5e8ba46a0a90d34e6a0ae3d62c6a686f004
         </a>
         
         <div class="navbar-nav ms-auto">
