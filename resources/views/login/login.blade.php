@@ -129,6 +129,39 @@
             background: #5e6fa3;
         }
 
+        
+        /* Password Toggle Styles */
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: none;
+            color: #6c757d;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .password-toggle-btn:hover {
+            color: #495057;
+        }
+
+        .password-toggle input {
+            padding-right: 40px;
+        }
+        
+
         /* Responsive */
         @media (max-width: 480px) {
             .login-card {
@@ -175,14 +208,20 @@
                     @enderror
                 </div>
 
-                <!-- Password Input -->
-                <div class="input-group mb-3">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
-                    @error('password')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+                <!-- Password Input with Toggle -->
+<div class="input-group mb-3">
+    <label for="password">Password</label>
+    <div class="password-toggle">
+        <input type="password" class="form-control" id="password" name="password" required>
+        <button type="button" class="password-toggle-btn" onclick="togglePassword('password')">
+            <i class="fas fa-eye" id="password-icon"></i>
+        </button>
+    </div>
+    @error('password')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
+
 
                 <!-- Remember Me Checkbox -->
                 <div class="remember-me">
@@ -210,5 +249,22 @@
 >>>>>>> a4d1d5e8ba46a0a90d34e6a0ae3d62c6a686f004
     <!-- Bootstrap and Custom JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function togglePassword(fieldId) {
+            const passwordField = document.getElementById(fieldId);
+            const icon = document.getElementById(fieldId + '-icon');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+    </script>
 </body>
 </html>

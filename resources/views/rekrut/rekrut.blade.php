@@ -247,19 +247,24 @@
                     <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
                 </div>
                 <h2 class="text-success mb-3">
-                    <i class="fas fa-thumbs-up me-2"></i>Terima Kasih Banyak!
+                    <i class="fas fa-thumbs-up me-2"></i>Terima Kasih!
                 </h2>
                 <div class="success-text">
-                    <p class="lead mb-4">Lamaran Anda telah berhasil dikirim dan akan kami proses.</p>
+                    <p class="lead mb-4">Lamaran Saudara/i telah berhasil dikirim dan akan kami proses.</p>
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle me-2"></i>
 <<<<<<< HEAD
+<<<<<<< HEAD
                         <strong>Mohon Untuk Screenshot Bukti Pengiriman Lamaran ini, bukti Screenshot ini akan digunakan kembali jika lolos ke tahap interview</strong>
+=======
+                        <strong>Mohon screenshoot bukti lamaran ini. Bukti screenshoot akan digunakan kembali jika lolos ke tahap selanjutnya. </strong>
+>>>>>>> v1.1
                     </div>
                     <div class="alert alert-info">
                         <i class="fas fa-info-circle me-2"></i>
-                        <strong>Informasi selanjutnya akan kami sampaikan melalui WhatsApp, jika lamaran sudah lolos ke tahap selanjutnya </strong>
+                        <strong>Pengumuman lolos ke tahap selanjutnya akan diinformasikan melalui WhatsApp.</strong>
                     </div>
+<<<<<<< HEAD
                     <p class="text-muted">
                         <i class=" me-2"></i>
 =======
@@ -274,6 +279,9 @@
 >>>>>>> a4d1d5e8ba46a0a90d34e6a0ae3d62c6a686f004
                         Tim HR kami akan menghubungi Anda dalam 1-3 hari kerja
                     </p>
+=======
+
+>>>>>>> v1.1
                 </div>
                 <div class="mt-4">
                     <a href="{{ route('rekrutmen.form') }}" class="btn btn-outline-primary">
@@ -399,15 +407,15 @@
 
                 <div class="mb-3">
                     <label for="cv" class="form-label">
-                        <i class="fas fa-file-pdf"></i>Upload CV (PDF/DOC)
+                        <i class="fas fa-file-pdf"></i>Upload CV (PDF)
                     </label>
                     <input type="file" 
                            class="form-control @error('cv') is-invalid @enderror" 
                            id="cv" 
                            name="cv" 
-                           accept=".pdf,.doc,.docx" 
+                           accept=".pdf" 
                            required>
-                    <div class="form-text">Format yang diterima: PDF, DOC, DOCX (Maks. 5MB)</div>
+                    <div class="form-text">Format yang diterima: PDF (Maks. 5MB)</div>
                     @error('cv')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @else
