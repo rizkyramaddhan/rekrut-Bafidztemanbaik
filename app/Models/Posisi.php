@@ -9,12 +9,12 @@ class Posisi extends Model
     protected $table = 'posisis';
 
     protected $fillable = [
-        'nama_posisi', 
-        'departemen', 
-        'deskripsi', 
-        'requirements', 
-        'benefits', 
-        'salary_range', 
+        'nama_posisi',
+        'departemen',
+        'deskripsi',
+        'requirements',
+        'benefits',
+        'salary_range',
         'status',
     ];
 

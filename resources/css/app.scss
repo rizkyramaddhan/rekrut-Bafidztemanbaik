@@ -1,14 +1,155 @@
-@import 'tailwindcss';
-@import 'bootstrap/dist/css/bootstrap.min.css';
-@import 'bootstrap/scss/bootstrap';
+@import "bootstrap/scss/bootstrap";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+@import "./pages/dashboard";
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source "../**/*.blade.php";
-@source "../**/*.js";
-@source "../**/*.vue";
-
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+/* Custom variables */
+:root {
+  --sidebar-width: 280px;
+  --navbar-height: 56px;
+  --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --primary-color: #667eea;
+  --sidebar-bg: #2c3e50;
+  --sidebar-hover: rgba(255,255,255,0.1);
+  --sidebar-active: rgba(255,255,255,0.2);
 }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+}
+
+/* Navbar */
+.navbar {
+  background: white !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1030;
+  height: var(--navbar-height);
+}
+.navbar-brand {
+  font-weight: 700;
+  color: var(--primary-color) !important;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: var(--navbar-height);
+  left: 0;
+  width: var(--sidebar-width);
+  height: calc(100vh - var(--navbar-height));
+  background: var(--primary-gradient);
+  box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+  overflow-y: auto;
+  transition: transform .3s ease;
+}
+
+.sidebar .nav-link {
+  color: rgba(255,255,255,0.8);
+  border-radius: 10px;
+  margin: 5px 15px;
+  padding: 12px 20px;
+  transition: all .3s ease;
+  text-decoration: none;
+  display: block;
+}
+.sidebar .nav-link:hover {
+  background: var(--sidebar-hover);
+  color: #fff;
+  transform: translateX(5px);
+}
+.sidebar .nav-link.active {
+  background: var(--sidebar-active);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.sidebar .nav-link i {
+  width: 20px;
+  margin-right: 10px;
+}
+
+/* Main */
+.main-wrapper {
+  margin-left: var(--sidebar-width);
+  margin-top: var(--navbar-height);
+  min-height: calc(100vh - var(--navbar-height));
+  transition: margin-left .3s ease;
+}
+.main-content {
+  padding: 20px;
+  background: #f8f9fa;
+}
+
+/* Cards */
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+/* Toggler */
+.btn-toggle-sidebar {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  padding: .5rem;
+  margin-right: 1rem;
+}
+.btn-toggle-sidebar:hover { color: #5a6fd8; }
+
+/* Breadcrumb */
+.breadcrumb { background: transparent; padding: 0; }
+.breadcrumb-item.active { color: #6c757d; }
+
+/* Responsive */
+@media (max-width: 991.98px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.show { transform: translateX(0); }
+  .main-wrapper { margin-left: 0; }
+
+  .sidebar-overlay {
+    position: fixed;
+    top: var(--navbar-height);
+    left: 0;
+    width: 100%;
+    height: calc(100vh - var(--navbar-height));
+    background-color: rgba(0,0,0,.5);
+    z-index: 999;
+    opacity: 0; visibility: hidden;
+    transition: all .3s ease;
+  }
+  .sidebar-overlay.show { opacity: 1; visibility: visible; }
+
+  .btn-toggle-sidebar { display: inline-block; }
+}
+@media (min-width: 992px) {
+  .btn-toggle-sidebar { display: none; }
+}
+
+/* Utils */
+.text-primary-custom { color: var(--primary-color) !important; }
+.bg-primary-custom { background: var(--primary-gradient) !important; }
+
+/* Animations */
+.fade-in { animation: fadeIn .5s ease-in; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Scrollbar (sidebar) */
+.sidebar::-webkit-scrollbar { width: 6px; }
+.sidebar::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.3);
+  border-radius: 3px;
+}
+.sidebar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.5); }

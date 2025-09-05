@@ -1,0 +1,8 @@
+.max-height-300 { max-height: 300px; }
+.avatar-sm { width: 35px; height: 35px; }
+
+/* Tetap pakai var global dari layout (app.scss) */
+.bg-primary-custom { background-color: #0d6efd; }
+
+/* Toggle block untuk aksi multi-hapus */
+.multi-delete-actions.show { display: block !important; }
