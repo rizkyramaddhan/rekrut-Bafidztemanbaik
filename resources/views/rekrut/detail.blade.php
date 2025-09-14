@@ -6,43 +6,97 @@
 @section('breadcrumb', 'Detail Pelamar')
 
 @php
-        // Fungsi untuk format nomor WhatsApp
-        function formatWhatsAppNumber($phone) {
-            if (!$phone) return null;
-            
-            // Hapus semua karakter non-digit
-            $cleanPhone = preg_replace('/[^0-9]/', '', $phone);
-            
-            // Konversi format Indonesia
-            if (substr($cleanPhone, 0, 2) === '08') {
-                $cleanPhone = '628' . substr($cleanPhone, 2);
-            } elseif (substr($cleanPhone, 0, 1) === '8') {
-                $cleanPhone = '62' . $cleanPhone;
-            } elseif (substr($cleanPhone, 0, 2) !== '62') {
-                $cleanPhone = '62' . $cleanPhone;
-            }
-            
-            return $cleanPhone;
+    use Illuminate\Support\Str;
+
+    // pastikan $tableId ada (sesuai data-* di root yang dipakai dashboard.js)
+    $tableId = $tableId ?? 'pelamarTable';
+
+    $badgeMap = [
+        'proses' => 'warning',
+        'interview' => 'primary',
+        'training' => 'info',
+        'ditolak' => 'danger',
+        'diterima' => 'success',
+    ];
+    $statusNow = $pelamar->status ?? 'proses';
+    $badge = $badgeMap[$statusNow] ?? 'secondary';
+
+    // nama fungsi JS yang diekspos oleh dashboard.js
+    $fnUbahStatus = "ubahStatus_{$tableId}";
+@endphp
+
+@php
+    // Fungsi untuk format nomor WhatsApp
+    function formatWhatsAppNumber($phone)
+    {
+        if (!$phone) {
+            return null;
         }
-        
-        $whatsappNumber = formatWhatsAppNumber($pelamar->telepon);
-        
-// Menghitung tanggal interview (2 hari setelah hari ini)
-$tanggalInterview = date('l, d F Y', strtotime('+2 days'));
 
-// Konversi hari ke bahasa Indonesia
-$hariInggris = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-$hariIndonesia = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        // Hapus semua karakter non-digit
+        $cleanPhone = preg_replace('/[^0-9]/', '', $phone);
 
-$bulanInggris = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-$bulanIndonesia = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        // Konversi format Indonesia
+        if (substr($cleanPhone, 0, 2) === '08') {
+            $cleanPhone = '628' . substr($cleanPhone, 2);
+        } elseif (substr($cleanPhone, 0, 1) === '8') {
+            $cleanPhone = '62' . $cleanPhone;
+        } elseif (substr($cleanPhone, 0, 2) !== '62') {
+            $cleanPhone = '62' . $cleanPhone;
+        }
 
-$tanggalInterview = str_replace($hariInggris, $hariIndonesia, $tanggalInterview);
-$tanggalInterview = str_replace($bulanInggris, $bulanIndonesia, $tanggalInterview);
+        return $cleanPhone;
+    }
 
-$defaultMessage = "Selamat Siang, Yayasan Tunas Dayaloka (Bimba Tahfidz temanbaik) mengundang " . $pelamar->nama . " untuk hadir Interview kerja pada:
+    $whatsappNumber = formatWhatsAppNumber($pelamar->telepon);
 
-Hari/Tanggal: " . $tanggalInterview . "
+    // Menghitung tanggal interview (2 hari setelah hari ini)
+    $tanggalInterview = date('l, d F Y', strtotime('+2 days'));
+
+    // Konversi hari ke bahasa Indonesia
+    $hariInggris = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    $hariIndonesia = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+
+    $bulanInggris = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ];
+    $bulanIndonesia = [
+        'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember',
+    ];
+
+    $tanggalInterview = str_replace($hariInggris, $hariIndonesia, $tanggalInterview);
+    $tanggalInterview = str_replace($bulanInggris, $bulanIndonesia, $tanggalInterview);
+
+    $defaultMessage =
+        'Selamat Siang, Yayasan Tunas Dayaloka (Bimba Tahfidz temanbaik) mengundang ' .
+        $pelamar->nama .
+        " untuk hadir Interview kerja pada:
+
+Hari/Tanggal: " .
+        $tanggalInterview .
+        "
 Waktu: Pukul 10.00 WIB - selesai
 Lokasi: Kantor Kemitraan Bimba Tahfidz Temanbaik
 Perum. Deparis Residence Blok B1 No. 19 (depan Randymart), Kecamatan Tajur Halang, Kabupaten Bogor.
@@ -68,8 +122,8 @@ Dimohon untuk datang tepat waktu. Jika tidak, maka kesempatan akan diberikan kep
 https://g.co/kgs/Z36RhWC
 
 Demikian informasi ini kami sampaikan. Terima kasih atas perhatian dan kerja samanya.";
-        $whatsappUrl = $whatsappNumber ? 'https://wa.me/' . $whatsappNumber . '?text=' . urlencode($defaultMessage) : '#';
-    @endphp
+    $whatsappUrl = $whatsappNumber ? 'https://wa.me/' . $whatsappNumber . '?text=' . urlencode($defaultMessage) : '#';
+@endphp
 
 @section('content')
     <!-- Main Content -->
@@ -81,7 +135,7 @@ Demikian informasi ini kami sampaikan. Terima kasih atas perhatian dan kerja sam
             </a>
         </div>
 
-        <div class="card shadow-sm rounded">
+        <div class="card shadow-sm rounded" id="{{ $tableId }}">
             <div class="card-header bg-primary text-white">
                 Informasi Pelamar
             </div>
@@ -95,15 +149,12 @@ Demikian informasi ini kami sampaikan. Terima kasih atas perhatian dan kerja sam
 
                     <dt class="col-sm-3">Telepon</dt>
                     <dd class="col-sm-9">
-                                    <a href="{{ $whatsappUrl }}" 
-                        target="_blank" 
-                        class="whatsapp-link"
-                        title="Hubungi via WhatsApp">
+                        <a href="{{ $whatsappUrl }}" target="_blank" class="whatsapp-link" title="Hubungi via WhatsApp">
                             <i class="fab fa-whatsapp me-2"></i>
                             WhatsApp
                             <i class="fas fa-external-link-alt ms-2"></i>
                         </a>
-                        
+
                         <a href="tel:{{ $pelamar->telepon }}" class="phone-link me-3 " title="Telepon langsung">
                             <i class="fas fa-phone text-primary me-2"></i>
                             {{ $pelamar->telepon }}
@@ -115,15 +166,53 @@ Demikian informasi ini kami sampaikan. Terima kasih atas perhatian dan kerja sam
 
                     <dt class="col-sm-3">Status</dt>
                     <dd class="col-sm-9">
-                        <span class="badge bg-{{ $pelamar->status == 'proses' ? 'warning' : ($pelamar->status == 'interview' ? 'primary' : ($pelamar->status == 'training' ? 'success' : ($pelamar->status == 'ditolak' ? 'danger' : 'secondary'))) }}">
+                        <span
+                            class="badge bg-{{ $pelamar->status == 'proses' ? 'warning' : ($pelamar->status == 'interview' ? 'primary' : ($pelamar->status == 'training' ? 'success' : ($pelamar->status == 'ditolak' ? 'danger' : 'secondary'))) }}">
                             {{ ucfirst($pelamar->status) }}
                         </span>
+
+                        <div class="btn-group" role="group" aria-label="Aksi Status">
+                            @if ($statusNow === 'proses')
+                                <button class="btn btn-sm btn-success"
+                                    onclick="ubahStatus_{{ $tableId }}({{ $pelamar->id }}, 'training')"
+                                    title="Proses ke Interview">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger"
+                                    onclick="(window['{{ $fnUbahStatus }}'] ?? window.ubahStatus)({{ $pelamar->id }}, 'ditolak')"
+                                    title="Tolak Pelamar">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            @elseif ($statusNow === 'interview')
+                                <button class="btn btn-sm btn-primary"
+                                    onclick="(window['{{ $fnUbahStatus }}'] ?? window.ubahStatus)({{ $pelamar->id }}, 'training')"
+                                    title="Proses ke Training">
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger"
+                                    onclick="(window['{{ $fnUbahStatus }}'] ?? window.ubahStatus)({{ $pelamar->id }}, 'ditolak')"
+                                    title="Tolak Pelamar">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            @elseif ($statusNow === 'training')
+                                <button class="btn btn-sm btn-success"
+                                    onclick="ubahStatus_{{ $tableId }}({{ $pelamar->id }}, 'training')"
+                                    title="Terima Pelamar">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger"
+                                    onclick="(window['{{ $fnUbahStatus }}'] ?? window.ubahStatus)({{ $pelamar->id }}, 'ditolak')"
+                                    title="Tolak Pelamar">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            @endif
+                        </div>
                     </dd>
 
                     <dt class="col-sm-3">Tanggal Apply</dt>
                     <dd class="col-sm-9">{{ $pelamar->created_at->format('d M Y') }}</dd>
 
-                    @if($pelamar->catatan)
+                    @if ($pelamar->catatan)
                         <dt class="col-sm-3">Catatan</dt>
                         <dd class="col-sm-9">{{ $pelamar->catatan }}</dd>
                     @endif
@@ -144,4 +233,3 @@ Demikian informasi ini kami sampaikan. Terima kasih atas perhatian dan kerja sam
         </div>
     </div>
 @endsection
-

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('telepon');
             $table->unsignedBigInteger('posisi');
-$table->foreign('posisi')->references('id')->on('posisis')->onDelete('cascade');
+            $table->foreign('posisi')->references('id')->on('posisis')->onDelete('cascade');
             $table->string('status')->default('proses'); // <- status bisa: proses, interview, training, ditolak
             $table->string('cv');
             $table->string('ktp');

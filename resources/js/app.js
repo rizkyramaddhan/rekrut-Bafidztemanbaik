@@ -13,5 +13,6 @@ import initPelamarTable from './pages/dashboard';
 
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.querySelector('[data-module="pelamarTable"]');
+  const root2 = document.querySelector('[data-module="pelamarTable"]');
   if (root) initPelamarTable(root);
 });

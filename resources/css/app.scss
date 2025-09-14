@@ -94,6 +94,308 @@ body {
   box-shadow: 0 8px 25px rgba(0,0,0,0.12);
 }
 
+/* =========================
+   Card Footer + Pagination Styles
+   Professional & Responsive Design
+   ========================= */
+
+:root {
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --border-color: #e5e7eb;
+  --text-muted: #6b7280;
+  --text-dark: #1f2937;
+  --bg-gray-50: #f9fafb;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --radius-lg: 0.5rem;
+  --radius-full: 9999px;
+  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =========================
+   Card Footer Base
+   ========================= */
+.card-footer.bg-white {
+  background: #ffffff;
+  border-top: 1px solid var(--border-color);
+  padding: 1rem 1.5rem;
+  border-bottom-left-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
+}
+
+/* Layout container */
+.card-footer .d-flex.justify-content-between.align-items-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Info text styling */
+.card-footer .text-muted {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin: 0;
+}
+
+/* =========================
+   Pagination Container
+   ========================= */
+/* Pusatkan pagination secara horizontal */
+.card-footer nav[aria-label="Pagination Navigation"] {
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;   /* untuk flex container */
+  display: flex;             /* jaga agar bisa center */
+}
+
+/* Jika wrapper pagination pakai .inline-flex, ikut center juga */
+.card-footer nav[aria-label="Pagination Navigation"] .inline-flex {
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+}
+
+/* Baris footer jadi center */
+.card-footer .d-flex.justify-content-between.align-items-center {
+  justify-content: center !important;
+  text-align: center;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
+
+/* Pagination tetap center */
+.card-footer nav[aria-label="Pagination Navigation"] {
+  display: flex;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+/* Showing results text */
+.card-footer nav[aria-label="Pagination Navigation"] .sm\:flex-1 > div:first-child p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.card-footer nav[aria-label="Pagination Navigation"] .sm\:flex-1 .font-medium {
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+/* =========================
+   Pagination Links Base
+   ========================= */
+.card-footer nav[aria-label="Pagination Navigation"] .inline-flex {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 0.125rem;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Individual pagination items */
+.card-footer nav[aria-label="Pagination Navigation"] .inline-flex > a,
+.card-footer nav[aria-label="Pagination Navigation"] .inline-flex > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--text-dark);
+  background: transparent;
+  border: none;
+  border-radius: calc(var(--radius-lg) - 0.125rem);
+  transition: var(--transition);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Hover states */
+.card-footer nav[aria-label="Pagination Navigation"] .inline-flex > a:hover {
+  background: var(--bg-gray-50);
+  color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+.card-footer nav[aria-label="Pagination Navigation"] .inline-flex > a:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  z-index: 1;
+}
+
+/* Active page state */
+.card-footer nav[aria-label="Pagination Navigation"] [aria-current="page"] > span,
+.card-footer nav[aria-label="Pagination Navigation"] [aria-current="page"].inline-flex {
+  background: var(--primary-color);
+  color: #ffffff;
+  box-shadow: var(--shadow-md);
+}
+
+/* Disabled state */
+.card-footer nav[aria-label="Pagination Navigation"] [aria-disabled="true"] > span {
+  color: #9ca3af;
+  background: transparent;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.card-footer nav[aria-label="Pagination Navigation"] [aria-disabled="true"]:hover > span {
+  background: transparent;
+  transform: none;
+}
+
+/* =========================
+   Navigation Arrows
+   ========================= */
+.card-footer nav[aria-label="Pagination Navigation"] .inline-flex > a[rel="prev"],
+.card-footer nav[aria-label="Pagination Navigation"] .inline-flex > a[rel="next"],
+.card-footer nav[aria-label="Pagination Navigation"] .inline-flex > span.rounded-l-md,
+.card-footer nav[aria-label="Pagination Navigation"] .inline-flex > a.rounded-r-md {
+  min-width: 2.5rem;
+  padding: 0.5rem;
+}
+
+.card-footer nav[aria-label="Pagination Navigation"] svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  stroke-width: 2;
+}
+
+/* =========================
+   Mobile Responsive Design
+   ========================= */
+
+/* Tablet and below */
+@media (max-width: 768px) {
+  .card-footer.bg-white {
+    padding: 1rem;
+  }
+
+  .card-footer .d-flex.justify-content-between.align-items-center {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .card-footer .text-muted {
+    text-align: center;
+    order: 2;
+  }
+
+  .card-footer nav[aria-label="Pagination Navigation"] {
+    order: 1;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Adjust pagination for mobile */
+  .card-footer nav[aria-label="Pagination Navigation"] .inline-flex > a,
+  .card-footer nav[aria-label="Pagination Navigation"] .inline-flex > span {
+    min-width: 2.25rem;
+    height: 2.25rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+  .card-footer .d-flex.justify-content-between.align-items-center {
+    gap: 0.5rem;
+  }
+
+  /* Hide page numbers on very small screens, keep only prev/next/current */
+  .card-footer nav[aria-label="Pagination Navigation"] .hidden.sm\:flex-1.sm\:flex .inline-flex > a:not([rel]):not([aria-current]) {
+    display: none;
+  }
+
+  /* Keep only essential pagination elements visible */
+  .card-footer nav[aria-label="Pagination Navigation"] .inline-flex {
+    gap: 0.125rem;
+    padding: 0.0625rem;
+  }
+
+  .card-footer nav[aria-label="Pagination Navigation"] .inline-flex > a,
+  .card-footer nav[aria-label="Pagination Navigation"] .inline-flex > span {
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+  }
+
+  /* Mobile-specific pagination layout */
+  .card-footer nav[aria-label="Pagination Navigation"] .flex-1.sm\:hidden,
+  .card-footer nav[aria-label="Pagination Navigation"] .sm\:hidden {
+    justify-content: center;
+    gap: 0.5rem;
+  }
+}
+
+/* =========================
+   Dark Mode Support (Optional)
+   ========================= */
+@media (prefers-color-scheme: dark) {
+  .card-footer.bg-white {
+    background: #1f2937;
+    border-color: #374151;
+  }
+
+  .card-footer nav[aria-label="Pagination Navigation"] .inline-flex {
+    background: #1f2937;
+    border-color: #374151;
+  }
+
+  .card-footer nav[aria-label="Pagination Navigation"] .inline-flex > a,
+  .card-footer nav[aria-label="Pagination Navigation"] .inline-flex > span {
+    color: #f9fafb;
+  }
+
+  .card-footer nav[aria-label="Pagination Navigation"] .inline-flex > a:hover {
+    background: #374151;
+  }
+
+  .card-footer .text-muted,
+  .card-footer nav[aria-label="Pagination Navigation"] .sm\:flex-1 > div:first-child p {
+    color: #9ca3af;
+  }
+}
+
+/* =========================
+   Enhanced Accessibility
+   ========================= */
+.card-footer nav[aria-label="Pagination Navigation"] .inline-flex > a:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .card-footer nav[aria-label="Pagination Navigation"] .inline-flex > a {
+    transition: none;
+  }
+  
+  .card-footer nav[aria-label="Pagination Navigation"] .inline-flex > a:hover {
+    transform: none;
+  }
+}
+
+
+
 /* Toggler */
 .btn-toggle-sidebar {
   background: none;

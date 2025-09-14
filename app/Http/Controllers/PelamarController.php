@@ -141,8 +141,8 @@ class PelamarController extends Controller
             'nama'   => 'required|string|max:255',
             'posisi' => 'required|exists:posisis,id',  // Assuming `posisi` is the ID of a position from the `Posisi` model
             'status' => 'required|string|in:proses,interview,training,ditolak,diterima', // Add all valid statuses
-            'cv'     => 'nullable|file|mimes:pdf|max:10240', // Max file size of 10MB
-            'ktp'    => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:10240', // Max file size of 10MB
+            'cv'     => 'nullable|file|mimes:pdf|max:7240', // Max file size of 7MB
+            'ktp'    => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:7240', // Max file size of 7MB
         ]);
 
         // Prepare the data to update

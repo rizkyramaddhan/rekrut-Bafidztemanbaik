@@ -249,14 +249,14 @@
         </div>
     </div>
 
+    {{-- Improved Card Footer with Professional Pagination --}}
     @if ($showFooter && isset($pelamars) && method_exists($pelamars, 'hasPages') && $pelamars->hasPages())
         <div class="card-footer bg-white">
             <div class="d-flex justify-content-between align-items-center">
-                <div class="text-muted">
-                    Menampilkan {{ $pelamars->firstItem() }} - {{ $pelamars->lastItem() }}
-                    dari {{ $pelamars->total() }} pelamar
+                {{-- Pagination Links --}}
+                <div class="pagination-wrapper">
+                    {{ $pelamars->links() }}
                 </div>
-                {{ $pelamars->links() }}
             </div>
         </div>
     @endif
